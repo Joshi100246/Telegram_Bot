@@ -5,7 +5,7 @@ from flask import Flask
 from telegram import Bot
 
 # Load from environment variables, fallback to defaults if not set
-BOT_TOKEN = os.getenv("BOT_TOKEN", "8467888370:AAEkb8Z0e8CX1dYj1rx2vV4_BlbM6KDwlUg")
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8467888370:AAHyaKjabwWY5zoHuojvMj_grUjo4WA_OAo")
 MY_CHAT_ID = os.getenv("MY_CHAT_ID", "715202200")
 FRIEND_CHAT_ID = os.getenv("FRIEND_CHAT_ID", "6193468045")
 
@@ -38,4 +38,4 @@ def run_flask():
 
 if __name__ == "__main__":
     threading.Thread(target=run_flask).start()
-    send_message()
+    send_message().
