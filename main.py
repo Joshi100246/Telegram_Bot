@@ -14,17 +14,22 @@ bot = Bot(token=BOT_TOKEN)
 # Function to send messages every 10 seconds (for testing)
 def send_message():
     while True:
-        text = "Hello Bangaram 💌"
+        try:
+            text = "Hello Bangaram 💌"
 
-        # Send to friend
-        bot.send_message(chat_id=FRIEND_CHAT_ID, text=text)
-        print("✅ Message sent to your friend!")
+            # Send to friend
+            bot.send_message(chat_id=FRIEND_CHAT_ID, text=text)
+            print("✅ Message sent to your friend!")
 
-        # Send to you
-        bot.send_message(chat_id=MY_CHAT_ID, text=text)
-        print("✅ Message sent to you!")
+            # Send to you
+            bot.send_message(chat_id=MY_CHAT_ID, text=text)
+            print("✅ Message sent to you!")
 
-        time.sleep(10)  # wait 10 seconds for testing
+        except Exception as e:
+            print(f"❌ Error sending message: {e}")
+
+        time.sleep(10)  # wait 15 minutes
+
 
 # Flask server (keeps Render service alive)
 app = Flask(__name__)
