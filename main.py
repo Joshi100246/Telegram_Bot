@@ -1,34 +1,42 @@
-from flask import Flask, request
-from telegram import Bot, Update
-from telegram.ext import CommandHandler, Application, ContextTypes
+import time
+import threading
 import os
+from flask import Flask
+from telegram import Bot
 
+# Load from environment variables, fallback to defaults if not set
+BOT_TOKEN = os.getenv("BOT_TOKEN", "8467888370:AAEkb8Z0e8CX1dYj1rx2vV4_BlbM6KDwlUg")
+MY_CHAT_ID = os.getenv("MY_CHAT_ID", "715202200")
+FRIEND_CHAT_ID = os.getenv("FRIEND_CHAT_ID", "6193468045")
+
+bot = Bot(token=BOT_TOKEN)
+
+# Function to send messages every 15 minutes
+def send_message():
+    while True:
+        text = "Hello Bangaram 💌"
+
+        # Send to friend
+        bot.send_message(chat_id=FRIEND_CHAT_ID, text=text)
+        print("✅ Message sent to your friend!")
+
+        # Send to you
+        bot.send_message(chat_id=MY_CHAT_ID, text=text)
+        print("✅ Message sent to you!")
+
+        time.sleep(15 * 60)  # wait 15 minutes
+
+
+# Flask server (keeps Render service alive)
 app = Flask(__name__)
 
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "YOUR_TELEGRAM_BOT_TOKEN")
-bot = Bot(token=TELEGRAM_TOKEN)
+@app.route('/')
+def home():
+    return "Bot is running ✅"
 
-# Simple command handler
-def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    update.message.reply_text('Hello! This bot is running with Flask and python-telegram-bot v20.3')
+def run_flask():
+    app.run(host="0.0.0.0", port=8080)
 
-# Set up the telegram bot application
-application = Application.builder().token(TELEGRAM_TOKEN).build()
-application.add_handler(CommandHandler('start', start))
-
-@app.route('/webhook', methods=['POST'])
-def webhook():
-    if request.method == "POST":
-        update = Update.de_json(request.get_json(force=True), bot)
-        application.process_update(update)
-        return 'ok'
-    return 'invalid'
-
-if __name__ == '__main__':
-    # For local testing, run Flask app and polling
-    import threading
-    def run_flask():
-        app.run(port=5000)
-    t = threading.Thread(target=run_flask)
-    t.start()
-    application.run_polling()
+if __name__ == "__main__":
+    threading.Thread(target=run_flask).start()
+    send_message()
