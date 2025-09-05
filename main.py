@@ -14,7 +14,7 @@ bot = Bot(token=BOT_TOKEN)
 # Async message loop
 async def send_message_async():
     while True:
-        text = "Hello"
+        text = "⏰ Reminder: Take a walk 🚶‍♂️"
         try:
             # Send to friend
             await bot.send_message(chat_id=FRIEND_CHAT_ID, text=text)
@@ -27,7 +27,7 @@ async def send_message_async():
         except Exception as e:
             print(f"❌ Error sending message: {e}")
 
-        await asyncio.sleep(15 * 60))  # wait 15 minutes
+        await asyncio.sleep(15 * 60)  # wait 15 minutes
 
 
 def start_message_loop():
