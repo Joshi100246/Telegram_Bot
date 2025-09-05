@@ -27,7 +27,7 @@ async def send_message_async():
         except Exception as e:
             print(f"❌ Error sending message: {e}")
 
-        await asyncio.sleep(15 * 60)  # wait 15 minutes
+        await asyncio.sleep(2 * 60)  # wait 2 minutes
 
 
 def start_message_loop():
