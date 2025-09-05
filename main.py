@@ -11,7 +11,7 @@ FRIEND_CHAT_ID = os.getenv("FRIEND_CHAT_ID", "6193468045")
 
 bot = Bot(token=BOT_TOKEN)
 
-# Function to send messages every 15 minutes
+# Function to send messages every 10 seconds (for testing)
 def send_message():
     while True:
         text = "Hello Bangaram 💌"
@@ -24,8 +24,7 @@ def send_message():
         bot.send_message(chat_id=MY_CHAT_ID, text=text)
         print("✅ Message sent to you!")
 
-        time.sleep(15 * 60)  # wait 15 minutes
-
+        time.sleep(10)  # wait 10 seconds for testing
 
 # Flask server (keeps Render service alive)
 app = Flask(__name__)
